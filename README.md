@@ -1,10 +1,10 @@
-# Psynteract Backend
+# Psynteract Backend
 
 __Web-based backend for the interactive experiments using the psynteract library.__
 
 This repository is mostly for development purposes. You are very welcome to poke around and contribute -- if you are looking to build experiments using psynteract, you might be looking for the [OpenSesame](//github.com/felixhenninger/psynteract-os) or [pure Python](//github.com/felixhenninger/psynteract-py) libraries for psynteract, which come bundled with this backend and an installer.
 
-## Status
+## Status
 
 This software is currently in beta: All core functionality is present and relatively stable.
 
