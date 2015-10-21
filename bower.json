@@ -1,0 +1,30 @@
+{
+  "name": "psynteract",
+  "authors": [
+    "Felix Henninger <mailbox@felixhenninger.com>",
+    "Pascal Kieslich <kieslich@psychologie.uni-mannheim.de>"
+  ],
+  "description": "Backend for Psynteract -- Interactive experiments for the behavioral sciences",
+  "license": "GPL3",
+  "homepage": "https://github.com/felixhenninger/psynteract-backend",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone-couchdb": "janmonschke/backbone-couchdb",
+    "backbone": "1.2.1",
+    "lodash": "~3.10.1",
+    "backbone.marionette": "marionette#2.4.2",
+    "backbone-modal": "awkward/backbone.modal#~1.1.5",
+    "jquery-migrate": "~1.2.1",
+    "jquery-ui": "~1.11.4",
+    "moment": "~2.10.6",
+    "bootstrap": "3.3.5",
+    "font-awesome": "~4.4.0"
+  }
+}

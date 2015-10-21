@@ -1,0 +1,29 @@
+body {
+  padding-top: 70px;
+}
+div.controls {
+  margin-bottom: 1em;
+}
+table#sessions code {
+  background-color: #eee;
+}
+
+/* SessionDetailView client table */
+td.client_name {
+  font-weight: bold;
+}
+td.client_data {
+  width: 60%;
+}
+/* Replaced clients fade into the background */
+tr.replaced td *, tr.replaced td code, tr.replaced td pre {
+  color: gray !important;
+}
+tr.replaced td code {
+  background-color: rgba(240, 240, 240, 0.5);
+}
+
+/* Modals */
+.bbm-wrapper {
+  z-index: 1040 !important;
+}

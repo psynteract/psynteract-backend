@@ -1,0 +1,5 @@
+bower_components
+node_modules
+backend.json
+src/_attachments/vendor
+src/_attachments/js/*.js

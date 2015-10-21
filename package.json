@@ -1,0 +1,20 @@
+{
+  "name" : "psynteract-backend",
+  "description" : "Backend for Psynteract -- Interactive experiments for the behavioral sciences",
+  "version" : "0.0.1",
+  "author" : "Felix Henninger <mailbox@felixhenninger.com> (http://felixhenninger.com/)",
+  "contributors" : [
+    "Pascal Kieslich <kieslich@psychologie.uni-mannheim.de>"
+    ],
+  "repository": "felixhenninger/psynteract-backend",
+  "license": "GPL-3.0",
+  "private": true,
+  "dependencies" : {
+    "gulp" : ">=3.9.0",
+    "gulp-coffee" : ">=2.3.1",
+    "gulp-header" : ">=1.7.1",
+    "mime" : "",
+    "walk" : "",
+    "bower" : ""
+  }
+}

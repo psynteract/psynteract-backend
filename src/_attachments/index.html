@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Pynteract • Control Panel</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <!-- Third party libraries -->
+  <link rel="stylesheet" href="/psynteract/_design/psynteract/vendor/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="/psynteract/_design/psynteract/vendor/font-awesome/css/font-awesome.min.css">
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/jquery/jquery-migrate.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/jquery-ui/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/lodash/lodash.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.js/backbone-min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone-couchdb/backbone-couchdb.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.marionette/backbone.wreqr.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.marionette/backbone.babysitter.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.marionette/backbone.marionette.min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.modal/backbone.marionette.modals-min.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/backbone.modal/backbone.modal-bundled-min.js"></script>
+  <link rel="stylesheet" href="/psynteract/_design/psynteract/vendor/backbone.modal/backbone.modal.css">
+  <link rel="stylesheet" href="/psynteract/_design/psynteract/vendor/backbone.modal/backbone.modal.theme.css">
+  <script type="text/javascript" src="/psynteract/_design/psynteract/vendor/moment.js/moment.js"></script>
+
+  <!-- Local couchdb integration -->
+  <script type="text/javascript" src="/_utils/script/jquery.couch.js"></script>
+
+  <!-- x.coffee -->
+  <script type="text/javascript" src="/psynteract/_design/psynteract/js/lib/x.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/js/lib/symmetrical_latin_square.js"></script>
+
+  <!-- application code -->
+  <link rel="stylesheet" href="/psynteract/_design/psynteract/css/app.css">
+  <script type="text/javascript" src="/psynteract/_design/psynteract/js/app.js"></script>
+  <script type="text/javascript" src="/psynteract/_design/psynteract/js/assignment.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#sessions">psynteract</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="#sessions">All sessions</a></li>
+        </ul>
+      </div>
+    </div><!-- /.container-fluid -->
+  </nav>
+
+  <div class="modal-region modal fade" tabindex="-1" role="dialog"></div>
+  <div class="container" id="main-region">
+    <div class="alert alert-info"><strong>Application initializing.</strong> If this state persists, please check whether Javascript is enabled.</div>
+  </div>
+</body>
+</html>
