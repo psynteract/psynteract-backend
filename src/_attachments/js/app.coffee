@@ -13,7 +13,7 @@ client_context = _.template '
 '
 
 session_controls = _.template '
-  <a class="btn btn-default btn-lg" href="/_utils/document.html?psynteract/{{ id }}"><i class="fa fa-cog"></i></a>
+  <a class="btn btn-default btn-lg" href="/_utils/document.html?{{ db_name }}/{{ id }}"><i class="fa fa-cog"></i></a>
   <button class="btn btn-primary btn-lg" id="btn-update-status">{{ next_action }}</button>
 '
 
@@ -44,7 +44,7 @@ client_template = _.template '
       </button>
       <ul class="dropdown-menu">
         <li><a class="replace"><strong>Replace</strong> this client</a></li>
-        <li><a href="/_utils/document.html?psynteract/{{ id }}"><strong>Show document</strong> in database</a></li>
+        <li><a href="/_utils/document.html?{{ db_name }}/{{ id }}"><strong>Show document</strong> in database</a></li>
       </ul>
     </div>
   </td>
@@ -79,7 +79,7 @@ session_template = _.template '
   <td>{{ ago }}</td>
   <td>
     <div class="btn-group">
-      <a class="btn btn-default btn-small" type="button" href="/_utils/document.html?psynteract/{{ id }}"><i class="fa fa-cog"></i></a>
+      <a class="btn btn-default btn-small" type="button" href="/_utils/document.html?{{ db_name }}/{{ id }}"><i class="fa fa-cog"></i></a>
       <button class="btn btn-default btn-small dropdown-toggle" data-toggle="dropdown" type="button">
         <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
@@ -90,16 +90,15 @@ session_template = _.template '
     </div>
   </td>
 '
-session_controls_template = _.template '
-  <button class="btn btn-link"><i class="icon-refresh icon-spin"></i></button>
-  <a class="btn btn-large btn" href="/_utils/document.html?psynteract/{{ session.id }}"><i class="fa fa-cog"></i></a>
-  <button id="update_status" class="btn btn-large {{ btnclass }}"><i class="icon-{{ icon }}"></i> {{ text }}</button>
-'
 
 # -------------------------------------------------------------------
 # Connect to CouchDB
-Backbone.couch_connector.config.db_name = 'psynteract'
-Backbone.couch_connector.config.ddoc_name = 'psynteract'
+# Extract the database name from the url, as this may
+# vary across installations
+Backbone.couch_connector.config.db_name = unescape(document.location.href).split('/')[3]
+# The design document is intended to stay fixed,
+# but, just to be sure, we can look it up in a similar way.
+Backbone.couch_connector.config.ddoc_name = unescape(document.location.href).split('/')[5]
 
 # We don't need global changes, instead we'll let the
 # views and collections take care of updating
@@ -254,6 +253,7 @@ Backbone.couch_connector.config.global_changes = on
       id: @model.id
       date: moment(@model.get "opened").format("MMMM Do YYYY, h:mm:ss a")
       ago: moment(@model.get "opened").fromNow()
+      db_name: Backbone.couch_connector.config.db_name
 
     modelEvents:
       'change': 'render'
@@ -336,6 +336,7 @@ Backbone.couch_connector.config.global_changes = on
     templateHelpers: () ->
       id: @model.id
       data: JSON.stringify @model.get('data'), censor, 2
+      db_name: Backbone.couch_connector.config.db_name
 
     update: ->
       # Give the view a moment to re-render
@@ -402,6 +403,7 @@ Backbone.couch_connector.config.global_changes = on
     templateHelpers: () ->
       id: @model.id
       next_action: @model.next_action()
+      db_name: Backbone.couch_connector.config.db_name
 
     update_status: ->
       # This is somewhat hackish, but the model doesn't
