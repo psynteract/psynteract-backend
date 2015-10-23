@@ -197,11 +197,19 @@ Backbone.couch_connector.config.global_changes = on
       client_groups = clientList.pluck 'group'
 
       check_consensus = (list, label) ->
-        # Stringify suggestions so that nested arrays can be handled
-        suggestions = _.unique(list, (x) -> JSON.stringify(x))
+        # Setup a reducer to allow deep comparisons of the values provided
+        first_elem = list[0]
+        reducer = (value, input) ->
+          # Perform a deep comparison between the first values
+          # and the value currently under inspection.
+          value and _.isEqual first_elem, input
 
-        if suggestions.length is 1
-          return suggestions[0]
+        # Using the reducer, determin whether there is consensus between clients
+        consensus = list.reduce(reducer, true)
+
+        # If so, return a single configuration
+        if consensus
+          return first_elem
         else
           throw 'No consensus between clients with regard to ' + label
 
