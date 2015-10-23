@@ -6,7 +6,7 @@
   ],
   "description": "Backend for Psynteract -- Interactive experiments for the behavioral sciences",
   "license": "GPL3",
-  "homepage": "https://github.com/felixhenninger/psynteract-backend",
+  "homepage": "https://github.com/psynteract/psynteract-backend",
   "private": true,
   "ignore": [
     "**/.*",

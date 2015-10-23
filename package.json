@@ -6,7 +6,7 @@
   "contributors" : [
     "Pascal Kieslich <kieslich@psychologie.uni-mannheim.de>"
     ],
-  "repository": "felixhenninger/psynteract-backend",
+  "repository": "psynteract/psynteract-backend",
   "license": "GPL-3.0",
   "private": true,
   "dependencies" : {
