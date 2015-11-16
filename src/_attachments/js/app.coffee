@@ -221,18 +221,20 @@ Backbone.couch_connector.config.global_changes = on
       groupings = design['groupings_needed']
       group_size = design['group_size']
       roles = design['roles']
+      ghosts = design['ghosts']
       players_n = clientList.length
 
-      # Gnerate assignment
-      assignments = assign players_n/group_size, client_ids, groupings, design_type
-
       console.log 'generating assignment with arguments', players_n/group_size, client_ids, groupings, design_type
-      console.log 'assignments', assignments
-      console.log 'groupings', assignments_to_dict(assignments)
-      console.log 'roles', roles_to_dict(assignments, roles)
 
-      @set 'groupings', assignments_to_dict(assignments)
-      @set 'roles', roles_to_dict(assignments, roles)
+      # Generate assignment
+      [assignments, groupings_output, roles_output, haunts] = assign players_n/group_size, client_ids, groupings, design_type, ghosts
+      console.log 'assignments', assignments
+      console.log 'groupings', groupings_output
+      console.log 'roles', roles_output
+      console.log 'haunts', haunts
+
+      @set 'groupings', groupings_output
+      @set 'roles', roles_output
 
     replace: (client_id, replacement_id) =>
       replacements = @get 'replace'
