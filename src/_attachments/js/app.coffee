@@ -224,10 +224,12 @@ Backbone.couch_connector.config.global_changes = on
       ghosts = design['ghosts']
       players_n = clientList.length
 
-      console.log 'generating assignment with arguments', players_n/group_size, client_ids, groupings, design_type
+      console.log 'generating assignment with arguments', \
+        players_n/group_size, group_size, client_ids, groupings, design_type
 
       # Generate assignment
-      [assignments, groupings_output, roles_output, haunts] = assign players_n/group_size, client_ids, groupings, design_type, ghosts
+      [assignments, groupings_output, roles_output, haunts] = \
+        assign players_n/group_size, group_size, client_ids, groupings, design_type, ghosts
       console.log 'assignments', assignments
       console.log 'groupings', groupings_output
       console.log 'roles', roles_output

@@ -67,7 +67,7 @@ generate_groups = (groups, players, groupings, design='perfect_stranger') ->
 
   return output
 
-assign = (groups, players, groupings, design='perfect_stranger', roles=[], ghosts=false) ->
+assign = (groups, group_size, players, groupings, design='perfect_stranger', roles=[], ghosts=false) ->
   # If the participants are provided as an integer
   # rather than an array, create an array of ascending
   # Integers instead.
@@ -82,9 +82,12 @@ assign = (groups, players, groupings, design='perfect_stranger', roles=[], ghost
 
   # If ghosts are enabled, and necessary,
   # seperate the ghosts from the actual players
-  if ghosts and players_n % groups isnt 0
-    ghosts_n = players_n % groups
+  if ghosts and players_n - groups * group_size isnt 0
+    ghosts_n = players_n - groups * group_size
     players_n = players_n - ghosts_n
+
+    if ghosts_n > players_n
+      alert 'There must at least as many players as there are ghosts!'
 
     # Exclude ghosts from the assignment for the time being
     players_ghosts = players.slice(players_n, players_n + ghosts_n)
@@ -93,6 +96,8 @@ assign = (groups, players, groupings, design='perfect_stranger', roles=[], ghost
     # The ghosts will share assignments with
     # randomly chosen (haunted, if you like) players
     players_haunted = players.slice(0, ghosts_n)
+  else
+    players_ghosts = []
 
   group_lists = generate_groups(groups, players, groupings, design)
   groupings = groups_to_assignments(group_lists)
