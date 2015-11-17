@@ -1,7 +1,7 @@
 {
   "name" : "psynteract-backend",
   "description" : "Backend for Psynteract -- Interactive experiments for the behavioral sciences",
-  "version" : "0.0.1",
+  "version" : "0.6.0",
   "author" : "Felix Henninger <mailbox@felixhenninger.com> (http://felixhenninger.com/)",
   "contributors" : [
     "Pascal Kieslich <kieslich@psychologie.uni-mannheim.de>"
