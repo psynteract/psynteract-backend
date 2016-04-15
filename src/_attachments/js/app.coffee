@@ -122,6 +122,11 @@ Backbone.couch_connector.config.global_changes = on
     window.App.vent.trigger 'sessions:list'
 
 # -------------------------------------------------------------------
+# Helper functions
+
+censor = (key, value) ->
+  return `undefined` if key[0] is "_"
+  value
 
 # -------------------------------------------------------------------
 # Views
@@ -334,9 +339,7 @@ Backbone.couch_connector.config.global_changes = on
     comparator: (model) ->
       model.get "name"
 
-  censor = (key, value) ->
-    return `undefined` if key[0] is "_"
-    value
+
 
   SessionDetail.ClientView = Backbone.Marionette.ItemView.extend
     tagName: "tr"
@@ -365,7 +368,8 @@ Backbone.couch_connector.config.global_changes = on
       'change:data': 'render update'
 
     events:
-      'click a.replace': (e) -> @triggerMethod 'client:replace'
+      'click a.replace': (e) ->
+        @triggerMethod 'client:replace'
 
   SessionDetail.NoClientsView = Backbone.Marionette.ItemView.extend
     tagName: 'tr'
@@ -502,7 +506,7 @@ Backbone.couch_connector.config.global_changes = on
     childEvents:
       'client:substitute': (v) ->
         if window.confirm 'Are you sure?'
-          console.log "Replicing client #{ @client_to_replace.id }
+          console.log "Replacing client #{ @client_to_replace.id }
             with #{ v.model.id } for session #{ @session.id }"
           @session.replace(@client_to_replace.id, v.model.id)
           @session.save()
