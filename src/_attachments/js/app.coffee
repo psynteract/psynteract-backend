@@ -473,7 +473,9 @@ censor = (key, value) ->
       <h4 class="modal-title">Replace client</h3>
     </div>
     <div class="modal-body">
-      <p>Please select the client with which to substitute its subsequently ignored colleague.</p>
+      <p>This is the client you are trying to replace</p>
+      <div id="replacedClientRegion" class="list-group"></div>
+      <p>Please select the client with which to substitute its subsequently ignored colleague using the \'substitute\'-button. Clicking on any of the clients will display additional information</p>
       <div id="modalBodyRegion"></div>
     </div>
   '
@@ -483,15 +485,30 @@ censor = (key, value) ->
     className: 'list-group-item'
 
     template: _.template """
-      <span>{{ name ? name : '<span class=\"text-muted\">(No Name)</span>' }}</span>
-      <code class="pull-right">{{ id }}</code>
+      <div class="list-group-item-text">
+        <span>{{ name ? name : '<span class=\"text-muted\">(No Name)</span>' }}</span>
+        <div class="pull-right">
+          <code>{{ id }}</code>
+          {{
+              substitute ? '<button type=\"button\" class=\"btn-substitute btn btn-xs btn-danger\" style="line-height: 1.2em; font-size: 90%;">substitute</button>' : ''
+          }}
+        </div>
+      </div>
+      <div class="additional_data collapse" id="additional_data_{{ id }}" style="clear: both; margin-top: 10px">
+        <pre>{{ data }}</pre>
+      </div>
       """
 
     templateHelpers: () ->
       id: @model.id
+      data: JSON.stringify @model.get('data'), censor, 2
+      substitute: @model.substitute
 
     events:
-      'click': (e) -> @triggerMethod 'client:substitute'
+      'click .btn-substitute': (e) ->
+        e.preventDefault()
+        @triggerMethod 'client:substitute'
+      'click': (e) -> $('#additional_data_' + @model.id).collapse('toggle')
 
   SessionView = Backbone.Marionette.CompositeView.extend
     template: _.template '<div class="list-group"></div>'
@@ -524,10 +541,28 @@ censor = (key, value) ->
       # Create regions within the modal view
       @rm = new Marionette.RegionManager
         regions:
+          'replacedClientRegion': '#replacedClientRegion'
           'modalBodyRegion': '#modalBodyRegion'
 
+      # Separate the to-be-replaced client
+      # from the others in the session.
+      other_clients = @clients.clone()
+      other_clients.remove(@client_to_replace)
+
+      # Set the substitute flag on all the other
+      # clients, so that they get the corresponding
+      # button.
+      # The client should not be substituted
+      # with itself.
+      other_clients.each (c) ->
+        c.substitute = true
+      @client_to_replace.substitute = false
+
+      @rm.get('replacedClientRegion').show new ClientView
+        model: @client_to_replace
+
       @rm.get('modalBodyRegion').show new SessionView
-        collection: @clients
+        collection: other_clients
         session: @session
         client_to_replace: @client_to_replace
         modal: @
