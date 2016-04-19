@@ -25,14 +25,17 @@ var process_attachments = function() {
       var filename_full = root + '/' + fileStats.name;
       var filename_attach = filename_full.substr(17);
 
-      fs.readFile(filename_full, function(err, data) {
-        if (err) throw err;
-        o = {
-          'content_type': mime.lookup(filename_full),
-          'data': data.toString('base64')
-        }
-        ddoc['_attachments'][filename_attach] = o;
-      });
+      // Ignore those pesky .DS_Store files
+      if (path.parse(filename_full).base != '.DS_Store') {
+        fs.readFile(filename_full, function(err, data) {
+          if (err) throw err;
+          o = {
+            'content_type': mime.lookup(filename_full),
+            'data': data.toString('base64')
+          }
+          ddoc['_attachments'][filename_attach] = o;
+        });
+      }
 
       next();
     };
@@ -75,11 +78,15 @@ var process_functions = function() {
       // Remove the extension from the path
       attach_path[attach_path.length-1] = path.parse(filename_full).name
 
-      // Add the contents of the file to the ddoc as plain text
-      fs.readFile(filename_full, function(err, data) {
-        if (err) throw err;
-        nest(ddoc, attach_path, data.toString('utf-8'));
-      });
+      if (path.parse(filename_full).base != '.DS_Store') {
+        // Add the contents of the file to the ddoc as plain text
+        fs.readFile(filename_full, function(err, data) {
+          if (err) throw err;
+          // Attach the document to the design doc
+          nest(ddoc, attach_path, data.toString('utf-8'));
+        });
+      }
+
 
       // Continue
       next();
