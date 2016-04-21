@@ -12,6 +12,13 @@ table#sessions code {
 td.client_name {
   font-weight: bold;
 }
+td.client_metadata small.client_metadata_timestamp {
+  opacity: 0;
+  transition: opacity .15s ease-in-out;
+}
+td.client_metadata:hover small.client_metadata_timestamp {
+  opacity: 1;
+}
 td.client_data {
   width: 60%;
 }

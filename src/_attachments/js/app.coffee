@@ -22,7 +22,7 @@ client_table = _.template '
     <thead>
       <tr>
         <th>Name</th>
-        <th>ID</th>
+        <th>ID / Metadata</th>
         <th>Data</th>
         <th>Options</th>
       </tr>
@@ -34,7 +34,14 @@ client_table = _.template '
 
 client_template = _.template '
   <td class="client_name">{{ name }}</td>
-  <td><code>{{ id }}</code></td>
+  <td class="client_metadata">
+    <code>{{ id }}</code><br>
+    <small class="client_metadata_timestamp text-muted">
+      <i class="fa fa-clock-o" aria-hidden="true"></i>
+      Last update <span class="value">{{ last_timestamp }}</span><br>
+      (move mouse to update)
+    </small>
+  </td>
   <td class="client_data"><pre>{{ data }}</pre></td>
   <td>
     <div class="dropdown">
@@ -353,6 +360,7 @@ censor = (key, value) ->
       data: JSON.stringify @model.get('data'), censor, 2
       db_name: Backbone.couch_connector.config.db_name
       name: @model.get('name') || ''
+      last_timestamp: moment(@model.get "timestamp").fromNow()
 
     update: ->
       # Give the view a moment to re-render
@@ -365,12 +373,19 @@ censor = (key, value) ->
       @$el.toggleClass 'replaced',
         @model.id in Object.keys(@session.get 'replace')
 
+    rerenderMetaData: () ->
+      @$('td.client_metadata small.client_metadata_timestamp span.value').html(
+        moment(@model.get "timestamp").fromNow()
+      )
+
     modelEvents:
       'change:data': 'render update'
 
     events:
       'click a.replace': (e) ->
         @triggerMethod 'client:replace'
+      'mouseenter td.client_metadata': (e) ->
+        @rerenderMetaData()
 
   SessionDetail.NoClientsView = Backbone.Marionette.ItemView.extend
     tagName: 'tr'
