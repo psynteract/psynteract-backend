@@ -22,7 +22,7 @@ function(oldDoc, req) {
 
     // Save the new document, and return a JSON-
     // serialized copy. Note that this will
-    // contain only the old correct revision hash.
+    // contain only the old revision hash.
     return [newDoc, toJSON(newDoc)];
   } else {
     return [null, 'Update failed']
