@@ -346,8 +346,6 @@ censor = (key, value) ->
     comparator: (model) ->
       model.get "name"
 
-
-
   SessionDetail.ClientView = Backbone.Marionette.ItemView.extend
     tagName: "tr"
     template: client_template
@@ -519,6 +517,7 @@ censor = (key, value) ->
       id: @model.id
       data: JSON.stringify @model.get('data'), censor, 2
       substitute: @model.substitute
+      name: @model.get 'name'
 
     events:
       'click .btn-substitute': (e) ->
