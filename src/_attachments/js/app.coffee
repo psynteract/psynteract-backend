@@ -352,6 +352,7 @@ censor = (key, value) ->
       id: @model.id
       data: JSON.stringify @model.get('data'), censor, 2
       db_name: Backbone.couch_connector.config.db_name
+      name: @model.get('name') || ''
 
     update: ->
       # Give the view a moment to re-render
